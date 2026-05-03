@@ -1,0 +1,88 @@
+# LeadsPlease Intent Data
+
+> Consumer + B2B intent signals scored 1–100% against the LeadsPlease national household graph and delivered as marketing-ready files with full demographics, contact, and propensity score. We sell scored, demographically-enriched households — not anonymous behavioral pings.
+
+## What it is, in one sentence
+
+LeadsPlease Intent Data identifies U.S. consumers and businesses who are actively researching a product or service right now, scores them 1–100% against the LeadsPlease national household database, and delivers a marketing-ready file with full demographics — not just a pixel ID.
+
+## The numbers
+
+- 6,929 B2C intent signals across 25 top-level categories and 206 sub-categories
+- 34,872 B2B intent topics — flat taxonomy covering SaaS products, business terms, and buying motions
+- Refreshed continuously — signals roll in daily; scored output stamped with last_updated
+- Hashed-email match key (SHA256 lowercase HEM) — privacy-safe joining to the LeadsPlease household graph
+
+## The 25 B2C signal categories
+
+Sports & Fitness (1,741) · Auto (743) · Spiritual (586) · Consumer Electronics (576) · Business Services (442) · Travel (400) · Gifting & Occasions (280) · Beauty (256) · Financial Services (256) · Real Estate (245) · Babies & Children (235) · Apparel (215) · Recreational Vehicles (200) · Arts & Entertainment (175) · Consumer Goods (171) · Health & Wellness (112) · Interest (77) · Food & Beverage (73) · Entertainment (43) · Politics & Society (24) · News (23) · Education (21) · Lifestyle (19) · Utilities (10) · Animal Lovers (6).
+
+## Real Estate depth (proof point)
+
+Within Real Estate alone there are 245 distinct signals across 7 sub-categories: Selling a Home (43 topics), Purchasing a Home (43), Purchasing Land (80), Investing in Real Estate (48), Purchasing a Vacation Home (24), Selling Real Estate (4), Property Type (3).
+
+## The Intent Propensity Score (1–100% percentile)
+
+Every record is scored on a 1–100% percentile scale derived from three layers:
+
+1. Behavioral signal strength — recency and frequency of engagement with the topic
+2. Demographic fit — match against the LeadsPlease household graph (income, net worth, age, geography, household composition)
+3. Trigger alignment — proximity to deed records, mortgage originations, and USPS new-mover events
+
+Standardized externally as Low (1–33) / Medium (34–66) / High (67–100) buckets, with the underlying 1–100% score available via DataWidget and the Data API.
+
+## What you receive
+
+A marketing-ready file with up to 29 fields per record:
+
+- Identity & contact: Name, postal address, personal phone, mobile phone, personal email, business email, LinkedIn URL
+- Demographics: Gender, age range, income range, net worth
+- Firmographics (where applicable): Job title, department, company, domain, revenue, employee count, company state
+- Scoring: Score category (Low/Med/High) + 1–100% score, last_updated timestamp
+- Match key: SHA256 hashed lowercase email for privacy-safe append
+
+Real fill rates from a recent Real Estate Seller Intent file (500 records): 100% name & gender · 89% postal address · 97% state · 72% mobile phone · 96% personal email · 86% age range · 68% income · 69% net worth.
+
+## Verticals that win
+
+- Mortgage Protection Insurance — Selling-a-Home + Purchasing-a-Home + age 35–64 + income $75K+
+- Real Estate Seller Leads — Home Value + Home Equity + Commission research signals + length-of-residence
+- Solar — Home ownership + Home Improvement + Utilities + sun-belt geography
+- Medicare — Age 64–66 trigger + Medicare/medication/symptom signals
+- New Mover / Pre-Mover — Pre-Movers + USPS NCOA + deed-recording trigger
+- Auto — Brand-specific intent (320 foreign, 113 truck, 111 SUV, 26 EV/hybrid) + lease-end timing
+- B2B — 34,872 topic-level signals matched to the LeadsPlease professional contact graph
+
+## Compliance posture
+
+- Marketing use, not eligibility decisioning. Licensed for finding people, not for making decisions about people. This is the FCRA bright line.
+- EULA-enforced restrictions flow through every order — no underwriting, no adverse-action use, no resale of raw signals.
+- Hashed-email matching means PII never moves between LeadsPlease and signal providers in the clear.
+- Suppression-ready — DNC, prison, deceased, and client-supplied suppression files apply pre-delivery.
+
+## Delivery surfaces
+
+- Subscriptions (the killer pattern) — define geo + demographic + intent-score-threshold criteria once, get newly-scored households pushed to you in near-real-time as their intent fires. Each delivery is incremental, deduplicated, never the same household twice. Available via the Data API Subscriptions endpoint and via white-label reseller feeds.
+- DataWidget — self-serve count → preview → order, with Intent score visible at the count stage
+- Data API — programmatic access for platforms, CRMs, dialers, and DSPs (also hosts the Subscriptions endpoint)
+- MCP Server — plug LeadsPlease into Claude, Cursor, ChatGPT, Windsurf, and n8n for natural-language list builds
+- Flat-file — CSV/Parquet drop to S3, SFTP, or email for batch buyers
+- Continuous feed — partner intelligence feed for resellers (white-label)
+
+## Why Subscriptions are uniquely possible
+
+Other intent providers send a static file once a month and wish you luck. LeadsPlease can deliver hot leads in near-real-time because of two unique capabilities: (1) the scoring + demographic-enrichment pipeline runs continuously, not monthly, so a household crossing an intent threshold can be scored and enriched within hours, and (2) the household graph already carries name, address, phone, email, and demographics — so the moment intent fires the marketing-ready output is already complete, no overnight enrichment batch required. The result: hot leads arrive while their intent is still hot, before competitors mail.
+
+## Why it works
+
+Most "intent data" companies sell behavioral signals as a finished product. They tell you someone, somewhere is researching mortgages.
+
+LeadsPlease sells the scored, demographically-enriched household — name, address, phone, email, income, age, geography — that is researching mortgages, with a 1–100% score telling you how confident we are. The signal is the input. The household is the product.
+
+That's why LeadsPlease Intent Data converts: marketers don't run campaigns to anonymous IDs. They run campaigns to people.
+
+## Support
+
+- Sales: info@leadsplease.com · 866-306-8674
+- Technical: tech@leadsplease.com
+- Compliance / EULA: tech@leadsplease.com

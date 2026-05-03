@@ -1,0 +1,75 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-05-03",
+  "shortStatement": "Marketing use only. Not for eligibility decisions, underwriting, pricing, or claims.",
+  "longStatement": "LeadsPlease® Intent Data is licensed for marketing use — finding people you might want to contact and prioritizing your outreach to them. It is not a consumer report under the Fair Credit Reporting Act and may not be used to make eligibility decisions about specific individuals (credit, insurance, employment, housing, or any other benefit).",
+  "allowedUses": [
+    {
+      "label": "Direct mail, email, phone, SMS, and digital ad targeting",
+      "note": "Subject to channel-specific consent and compliance rules (TCPA for phone/SMS, CAN-SPAM for email, state-level privacy rights)."
+    },
+    {
+      "label": "Lookalike modeling for marketing audiences",
+      "note": "Use the Intent Propensity Score and demographic enrichment to model audiences that resemble your converted customers."
+    },
+    {
+      "label": "CRM enrichment for marketing segmentation",
+      "note": "Append the score and intent_category to existing CRM records via SHA256 hashed-email match — for segmentation and outreach prioritization, not for eligibility scoring."
+    },
+    {
+      "label": "Suppression matching against your existing customer base",
+      "note": "Upload your customer file as a suppression key file so existing customers are excluded from prospecting drops."
+    },
+    {
+      "label": "Marketing prioritization (not eligibility scoring)",
+      "note": "Decide which households to mail, call, email, or target with digital ads first. The Intent Propensity Score is a marketing prioritization tool, not an eligibility score."
+    }
+  ],
+  "prohibitedUses": [
+    {
+      "label": "Underwriting, credit decisioning, insurance pricing, or claims handling",
+      "reason": "FCRA — eligibility decisioning requires a consumer report from a CRA with adverse-action notice rights, dispute procedures, and accuracy standards. LeadsPlease® Intent Data is not a consumer report."
+    },
+    {
+      "label": "Employment, hiring, tenant screening, or housing decisions",
+      "reason": "FCRA — same boundary. Decisions about a person's eligibility for employment or housing require a CRA-issued consumer report."
+    },
+    {
+      "label": "Direct marketing to children under 13",
+      "reason": "COPPA — the Babies & Children signal category targets the parent or caregiver, never the child. No outreach may be directed to minors under 13."
+    },
+    {
+      "label": "Reselling raw signal data",
+      "reason": "EULA — the scored, demographically-enriched output is licensable. Raw upstream behavioral signals are not. Resale of the scored output requires a separate reseller agreement."
+    },
+    {
+      "label": "Reverse-engineering or replicating the Intent Propensity Score",
+      "reason": "EULA — the scoring model is proprietary. Attempting to derive or replicate the model from delivered output is prohibited."
+    },
+    {
+      "label": "Combining the data with other sources to derive eligibility-grade information",
+      "reason": "EULA anti-circumvention clause — the marketing-use restriction cannot be bypassed by re-scoring against credit data, employment data, or any other eligibility-grade source."
+    }
+  ],
+  "channelRules": {
+    "phone": "The federal Do Not Call (DNC) registry is suppressed pre-delivery on every order. Client-level consent for outbound calls — especially automated/recorded calls — is the client's responsibility under TCPA. State-level rules in FL, OK, WA, MD apply on top.",
+    "sms": "Express written consent is required for SMS marketing under TCPA. Stricter state-level rules apply in FL, OK, WA, MD. The federal DNC registry suppression applies to mobile numbers as well.",
+    "email": "CAN-SPAM compliance is the client's responsibility on send: clear sender identity, honest subject line, valid postal address, and a working unsubscribe mechanism in every commercial email.",
+    "mail": "No federal consent requirement for direct mail. LeadsPlease® applies DNC, prison, deceased, and client-supplied suppression files pre-delivery. State-level solicitation rules in CA, NY, TX may apply for specific verticals."
+  },
+  "industrySpecific": {
+    "insurance": "Marketing use only. LeadsPlease® Intent Data identifies households likely to need insurance products — for outreach and targeting. It is not used for underwriting, pricing, or claims handling. Several state insurance departments (NY, CA, CO, WA) restrict use of external consumer data in insurance pricing, which reinforces the marketing-only posture. Eligibility decisions remain with your underwriting team and require a consumer report from a CRA.",
+    "mortgage": "Marketing use only. LeadsPlease® Intent Data may be used to identify households for marketing campaigns about credit products — not to decide who gets credit, at what rate, or whether to deny a credit application. ECOA prohibits use of protected-class proxies (age, gender, ethnicity) in credit decisioning. Mortgage trigger-lead rules (24-hour post-credit-pull restrictions) are the client's responsibility.",
+    "medicare": "Marketing use only. LeadsPlease® identifies Medicare-eligible households with relevant interest signals for outreach. CMS Medicare Marketing Guidelines — licensed agents, scope-of-appointment forms, unsolicited-contact limits, prohibited language and disclaimers — govern your outreach and remain your responsibility.",
+    "healthAndWellness": "Marketing use only. Health & Wellness signals describe consumer interest, not medical conditions or diagnoses. LeadsPlease® is not a HIPAA-covered entity, but several state privacy laws require opt-in consent for sensitive categories — that obligation is flowed through to clients via the EULA."
+  },
+  "privacyRights": {
+    "statement": "Consumer privacy rights are honored across all U.S. states with applicable laws. Opt-outs are suppressed pre-delivery.",
+    "coverage": "California (CCPA/CPRA), Virginia, Colorado, Connecticut, Utah, Texas, Oregon, Montana, plus 12+ other states with comprehensive privacy statutes. New state laws are tracked continuously and suppression rules update pre-delivery as they take effect."
+  },
+  "matchingAndPrivacy": {
+    "hashedEmail": "SHA256 lowercase hashed email is the primary join key between LeadsPlease® and upstream signal providers. PII never moves between systems in the clear. Plaintext PII is reconstituted only at the LeadsPlease® delivery boundary.",
+    "suppression": "Pre-delivery suppression includes: federal DNC registry, prison addresses, deceased records, and client-supplied suppression files (existing customers, prior responders, churned accounts)."
+  },
+  "attestation": "Every order requires acceptance of the LeadsPlease® End-User License Agreement, which contractually restates these permitted-use boundaries. The EULA is the mechanism that makes the marketing-only restriction enforceable; combined with hashed-email privacy and pre-delivery suppression, it forms the LeadsPlease® compliance posture end-to-end."
+}

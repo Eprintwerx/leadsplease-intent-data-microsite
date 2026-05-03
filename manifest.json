@@ -1,0 +1,16 @@
+{
+  "name": "LeadsPlease Intent Data",
+  "short_name": "LP Intent Data",
+  "description": "Consumer + B2B intent signals scored 1–10 against the LeadsPlease household graph and delivered as marketing-ready files with full demographics, contact, and propensity score.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FF6633",
+  "icons": [
+    {
+      "src": "https://www.leadsplease.com/affiliates/lp/images/look_feel/logo-lp-1777739221978-2993.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ]
+}

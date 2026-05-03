@@ -1,0 +1,12 @@
+{
+  "name": "leadsplease-intent-data-microsite",
+  "version": "1.0.0",
+  "description": "LeadsPlease® Intent Data marketing microsite — Consumer + B2B intent signals scored 1–10 against the LeadsPlease® household graph and delivered as marketing-ready files with full demographics. Hosted at intent.leadsplease.com.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
