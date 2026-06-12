@@ -6,7 +6,7 @@ name: Deploy static site to S3
 #   AWS_REGION
 #   S3_BUCKET
 # Optional:
-#   CLOUDFRONT_DISTRIBUTION_ID   (invalidates /* after sync)
+#   CLOUDFRONT_DISTRIBUTION_ID   (invalidates /intent-data-microsite/* after sync)
 
 on:
   push:
@@ -16,6 +16,9 @@ on:
 concurrency:
   group: deploy-s3-${{ github.ref }}
   cancel-in-progress: true
+
+env:
+  S3_PREFIX: intent-data-microsite
 
 jobs:
   deploy:
@@ -34,33 +37,33 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Sync hashed Astro assets (immutable, long cache)
-        run: |
-          aws s3 sync ./_astro "s3://${S3_BUCKET}/_astro/" \
-            --delete \
-            --cache-control "public, max-age=31536000, immutable"
         env:
           S3_BUCKET: ${{ secrets.S3_BUCKET }}
+        run: |
+          aws s3 sync ./_astro "s3://${S3_BUCKET}/${S3_PREFIX}/_astro/" \
+            --delete \
+            --cache-control "public, max-age=31536000, immutable"
 
       - name: Sync HTML files (no cache)
+        env:
+          S3_BUCKET: ${{ secrets.S3_BUCKET }}
         run: |
-          aws s3 sync . "s3://${S3_BUCKET}/" \
+          aws s3 sync . "s3://${S3_BUCKET}/${S3_PREFIX}/" \
             --exclude "*" \
             --include "*.html" \
             --cache-control "no-store, no-cache, must-revalidate, max-age=0" \
             --content-type "text/html; charset=utf-8"
-        env:
-          S3_BUCKET: ${{ secrets.S3_BUCKET }}
 
       - name: Sync other static files (1h cache)
-        run: |
-          aws s3 cp llms.txt              "s3://${S3_BUCKET}/llms.txt"              --cache-control "public, max-age=3600" --content-type "text/plain; charset=utf-8"
-          aws s3 cp robots.txt            "s3://${S3_BUCKET}/robots.txt"            --cache-control "public, max-age=3600" --content-type "text/plain; charset=utf-8"
-          aws s3 cp sitemap.xml           "s3://${S3_BUCKET}/sitemap.xml"           --cache-control "public, max-age=3600" --content-type "application/xml; charset=utf-8"
-          aws s3 cp manifest.json         "s3://${S3_BUCKET}/manifest.json"         --cache-control "public, max-age=3600" --content-type "application/manifest+json"
-          aws s3 cp permitted-use.json    "s3://${S3_BUCKET}/permitted-use.json"    --cache-control "public, max-age=3600" --content-type "application/json"
-          aws s3 cp og-image.svg          "s3://${S3_BUCKET}/og-image.svg"          --cache-control "public, max-age=3600" --content-type "image/svg+xml"
         env:
           S3_BUCKET: ${{ secrets.S3_BUCKET }}
+        run: |
+          aws s3 cp llms.txt              "s3://${S3_BUCKET}/${S3_PREFIX}/llms.txt"              --cache-control "public, max-age=3600" --content-type "text/plain; charset=utf-8"
+          aws s3 cp robots.txt            "s3://${S3_BUCKET}/${S3_PREFIX}/robots.txt"            --cache-control "public, max-age=3600" --content-type "text/plain; charset=utf-8"
+          aws s3 cp sitemap.xml           "s3://${S3_BUCKET}/${S3_PREFIX}/sitemap.xml"           --cache-control "public, max-age=3600" --content-type "application/xml; charset=utf-8"
+          aws s3 cp manifest.json         "s3://${S3_BUCKET}/${S3_PREFIX}/manifest.json"         --cache-control "public, max-age=3600" --content-type "application/manifest+json"
+          aws s3 cp permitted-use.json    "s3://${S3_BUCKET}/${S3_PREFIX}/permitted-use.json"    --cache-control "public, max-age=3600" --content-type "application/json"
+          aws s3 cp og-image.svg          "s3://${S3_BUCKET}/${S3_PREFIX}/og-image.svg"          --cache-control "public, max-age=3600" --content-type "image/svg+xml"
 
       - name: Invalidate CloudFront (optional)
         env:
@@ -69,7 +72,7 @@ jobs:
           if [ -n "$CLOUDFRONT_DISTRIBUTION_ID" ]; then
             aws cloudfront create-invalidation \
               --distribution-id "$CLOUDFRONT_DISTRIBUTION_ID" \
-              --paths "/*"
+              --paths "/${S3_PREFIX}/*"
           else
             echo "CLOUDFRONT_DISTRIBUTION_ID not set — skipping invalidation"
           fi
