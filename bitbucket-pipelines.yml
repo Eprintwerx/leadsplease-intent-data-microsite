@@ -1,0 +1,62 @@
+image: amazon/aws-cli:latest
+
+# Required Bitbucket repository variables:
+#   AWS_ACCESS_KEY_ID
+#   AWS_SECRET_ACCESS_KEY
+#   AWS_DEFAULT_REGION
+#   S3_BUCKET
+# Optional:
+#   CLOUDFRONT_DISTRIBUTION_ID   (invalidates /* after sync)
+
+definitions:
+  steps:
+    - step: &deploy-to-s3
+        name: Deploy static site to S3
+        deployment: production
+        script:
+          # 1. Hashed Astro assets — immutable, long cache
+          - >-
+            aws s3 sync ./_astro "s3://${S3_BUCKET}/_astro/"
+            --delete
+            --cache-control "public, max-age=31536000, immutable"
+
+          # 2. HTML — never cache (mirrors server.js behaviour)
+          - >-
+            aws s3 sync . "s3://${S3_BUCKET}/"
+            --exclude "*"
+            --include "*.html"
+            --cache-control "no-store, no-cache, must-revalidate, max-age=0"
+            --content-type "text/html; charset=utf-8"
+
+          # 3. Other static files — 1 hour cache
+          - >-
+            aws s3 cp llms.txt        "s3://${S3_BUCKET}/llms.txt"        --cache-control "public, max-age=3600" --content-type "text/plain; charset=utf-8"
+          - >-
+            aws s3 cp robots.txt      "s3://${S3_BUCKET}/robots.txt"      --cache-control "public, max-age=3600" --content-type "text/plain; charset=utf-8"
+          - >-
+            aws s3 cp sitemap.xml     "s3://${S3_BUCKET}/sitemap.xml"     --cache-control "public, max-age=3600" --content-type "application/xml; charset=utf-8"
+          - >-
+            aws s3 cp manifest.json   "s3://${S3_BUCKET}/manifest.json"   --cache-control "public, max-age=3600" --content-type "application/manifest+json"
+          - >-
+            aws s3 cp permitted-use.json "s3://${S3_BUCKET}/permitted-use.json" --cache-control "public, max-age=3600" --content-type "application/json"
+          - >-
+            aws s3 cp og-image.svg    "s3://${S3_BUCKET}/og-image.svg"    --cache-control "public, max-age=3600" --content-type "image/svg+xml"
+
+          # 4. Optional CloudFront invalidation
+          - >-
+            if [ -n "$CLOUDFRONT_DISTRIBUTION_ID" ]; then
+              aws cloudfront create-invalidation
+              --distribution-id "$CLOUDFRONT_DISTRIBUTION_ID"
+              --paths "/*";
+            else
+              echo "CLOUDFRONT_DISTRIBUTION_ID not set — skipping invalidation";
+            fi
+
+pipelines:
+  branches:
+    main:
+      - step: *deploy-to-s3
+
+  custom:
+    deploy:
+      - step: *deploy-to-s3
