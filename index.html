@@ -84,8 +84,8 @@
   nav.topbar .nav-dropdown-menu { display: none; }
   nav.mobile-nav, .mobile-nav-overlay { display: none; }
   /* Reserve space for sticky topbar + sticky tab nav when scrolling to anchors. */
-  html { scroll-padding-top: 130px; }
-  .sg-panel[id] { scroll-margin-top: 130px; }
+  html { scroll-padding-top: 190px; }
+  .sg-panel[id] { scroll-margin-top: 190px; }
 </style>
 
 <!-- Fonts (display=optional so no swap-induced shift) -->
@@ -96,7 +96,7 @@
 <style>
   body { background: #fff; }
   .sg-tabs { position: sticky; top: 0; z-index: 50; background: #fff; border-bottom: 1px solid #e5e5e5; box-shadow: 0 1px 0 rgba(0,0,0,0.02); }
-  .sg-tabs-inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; gap: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .sg-tabs-inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; flex-wrap: wrap; justify-content: center; row-gap: 0; column-gap: 4px; }
   .sg-tab { font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600; color: #666; padding: 18px 20px; cursor: pointer; border: none; background: transparent; border-bottom: 3px solid transparent; transition: color 0.15s, border-color 0.15s; white-space: nowrap; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
   .sg-tab:hover { color: #1C1410; }
   .sg-tab.is-active { color: #FF6633; border-bottom-color: #FF6633; }
