@@ -21,7 +21,7 @@ jobs:
   deploy:
     name: Sync to S3
     runs-on: ubuntu-latest
-    environment: production
+    environment: test
     steps:
       - name: Checkout
         uses: actions/checkout@v4
