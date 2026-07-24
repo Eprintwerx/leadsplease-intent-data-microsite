@@ -6,7 +6,7 @@ name: Deploy static site to S3
 #   AWS_REGION
 # Required GitHub repository (or environment) variable:
 #   S3_BUCKET
-# Optional:
+# Optional GitHub repository (or environment) variable:
 #   CLOUDFRONT_DISTRIBUTION_ID   (invalidates /intent-data-microsite/* after sync)
 
 on:
@@ -63,7 +63,7 @@ jobs:
 
       - name: Invalidate CloudFront (optional)
         env:
-          CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          CLOUDFRONT_DISTRIBUTION_ID: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
         run: |
           if [ -n "$CLOUDFRONT_DISTRIBUTION_ID" ]; then
             aws cloudfront create-invalidation \
