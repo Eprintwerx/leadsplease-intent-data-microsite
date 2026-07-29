@@ -19,7 +19,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  S3_PREFIX: intent-data-microsite
+  S3_PREFIX: intent-data
   S3_BUCKET: ${{ vars.S3_BUCKET }}
 
 jobs:
